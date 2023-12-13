@@ -3,28 +3,17 @@ const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken');
 const { deleteUploadedFile } = require("../utils/deleteUploadedFile");
 
-const userSchema = new Schema({
-    userId: { type: String, unique: true },
+const userSchema = new Schema({        
+    userName: { type: String, required: true },
+    userEmail: { type: String, required: true },
     password: { type: String, required: true },
-    lastName: { type: String, required: true },
-    firstName: { type: String, required: true },
-    age: { type: Number },
-    city: { type: String },
-    major: { type: String },
-    about: { type: String },
-    score: { type: Number },
-    country: { type: String },
-    university: { type: String },
-    nationality: { type: String },
-    profileImage: { type: String ,},
-    graduationYear: { type: Number },
-    mobileNumber: { type: Number },
-    accountStatus: { type: String, enum: ["Active", "Inactive"], default: "Active" },
-    role: { type: String, enum: ["Admin", "Instructor", "Student"], default: "Student" },
-    applicantFor: [{ type: Schema.Types.ObjectId, ref: "Job" }],
-    earnedCertificates: [{ type: Schema.Types.ObjectId, ref: "Certificate" }],
-    registeredCourses: [{ type: Schema.Types.ObjectId, ref: "Course" },],
-    createdCVs: [{ type: Schema.Types.ObjectId, ref: "CV" }],
+    country: { type: String }, 
+    mobileNumber: { type: Number }, 
+    role: { type: String, enum: ["Admin",  "User"], default: "User" },
+    // applicantFor: [{ type: Schema.Types.ObjectId, ref: "Job" }],
+    // earnedCertificates: [{ type: Schema.Types.ObjectId, ref: "Certificate" }],
+    // registeredCourses: [{ type: Schema.Types.ObjectId, ref: "Course" },],
+    // createdCVs: [{ type: Schema.Types.ObjectId, ref: "CV" }],
 }, { timestamps: true });
 
 userSchema.pre('findOneAndUpdate', deleteUploadedFile)
