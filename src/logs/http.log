@@ -1,0 +1,4 @@
+{"level":"http","message":"304d281b-1d21-47af-a1e8-8ffa08b7012d POST /seff-academy/v1.0/auth/logout 404 43 54.958 ms","timestamp":"2023-12-13 02:24:17.370 AM"}
+{"level":"http","message":"67496925-44dd-4a3c-b616-68c8708d8bb4 POST /seff-academy/v1.0/auth/login 404 43 2.057 ms","timestamp":"2023-12-13 02:24:37.771 AM"}
+{"level":"http","message":"b6ea0844-0714-49d5-844a-570a02838b49 POST /tax-hub//auth/login 404 43 9.090 ms","timestamp":"2023-12-13 02:33:04.559 AM"}
+{"level":"http","message":"48f54d35-4801-40a7-8288-3e715694daea POST /tax-hub//auth/login 404 43 182.526 ms","timestamp":"2023-12-13 02:33:22.304 AM"}
