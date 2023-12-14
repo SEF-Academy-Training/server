@@ -10,10 +10,9 @@ const userSchema = new Schema({
     country: { type: String }, 
     mobileNumber: { type: Number }, 
     role: { type: String, enum: ["Admin",  "User"], default: "User" },
-    // applicantFor: [{ type: Schema.Types.ObjectId, ref: "Job" }],
-    // earnedCertificates: [{ type: Schema.Types.ObjectId, ref: "Certificate" }],
-    // registeredCourses: [{ type: Schema.Types.ObjectId, ref: "Course" },],
-    // createdCVs: [{ type: Schema.Types.ObjectId, ref: "CV" }],
+    blog: [{ type: Schema.Types.ObjectId, ref: "Blog" }],
+    paper: [{ type: Schema.Types.ObjectId, ref: "Paper" }], 
+    services: [{ type: Schema.Types.ObjectId, ref: "Services" }],
 }, { timestamps: true });
 
 userSchema.pre('findOneAndUpdate', deleteUploadedFile)
