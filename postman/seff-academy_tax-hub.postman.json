@@ -1,0 +1,896 @@
+{
+	"info": {
+		"_postman_id": "a3fb7022-37aa-41b5-a0cb-cb4900362c5a",
+		"name": "seff-academy_tax-hub",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29103894"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"userName\": \"aaa\",\r\n    \"userEmail\":\"mmm@mm.mm\",\r\n    \"password\": \"Password1230!\",\r\n\r\n    \"mobileNumber\":\"01112223334\",\r\n    \"country\":\"EG\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/auth/register",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userEmail\":\"mmm@mm.mm\",\r\n    \"password\": \"Password1230!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/auth/login",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/auth/logout",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{tax-hub_url}}/users/get-all",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"users",
+								"get-all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{tax-hub_url}}/users/get-one/657cab2928fb35987861b094",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"users",
+								"get-one",
+								"657cab2928fb35987861b094"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create By Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\t{\r\n\t\t\"userName\": \"aaa\",\r\n    \"userEmail\":\"mmm@mm.mm\",\r\n    \"password\": \"Password1230!\",\r\n    \"mobileNumber\":\"01112223334\",\r\n    \"country\":\"EG\"\r\n\t}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/users/create-by-admin",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"users",
+								"create-by-admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update By Admin",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\t{\r\n\t\t\"lastName\": \"Doe22\",\r\n\t\t\"firstName\": \"John22\",\r\n\t\t\"accountStatus\": \"Active\",\r\n\t\t\"role\": \"Instructor\",\r\n\t\t\"mobileNumber\": 132234568890,\r\n\t\t\"userId\": \"1234567880\",\r\n\t\t\"password\": \"Passw0rd!\",\r\n        \"score\":\"10\"\r\n\t}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/users/update-by-admin/654812ee6c1dcd59f65ec6f7",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"users",
+								"update-by-admin",
+								"654812ee6c1dcd59f65ec6f7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "Taha",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "lastName",
+									"value": "Hamdy",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/E:/Gericht-MultiPages/src/assets/award03.png"
+								},
+								{
+									"key": "city",
+									"value": "alex",
+									"type": "text"
+								},
+								{
+									"key": "mobileNumber",
+									"value": "132234568891",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/users/update-profile/6547fc89c5abdc4807128bf8",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"users",
+								"update-profile",
+								"6547fc89c5abdc4807128bf8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Profile",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "Taha",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "lastName",
+									"value": "Hamdy",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/E:/Gericht-MultiPages/src/assets/award01.png"
+								},
+								{
+									"key": "city",
+									"value": "alex",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/users/delete-user/6547fc89c5abdc4807128bf8",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"users",
+								"delete-user",
+								"6547fc89c5abdc4807128bf8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "blogs",
+			"item": [
+				{
+					"name": "Get All blogs",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/blogs/",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"blogs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One blogs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{tax-hub_url}}/blogs/657cad438b056f2cdbc143e1",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"blogs",
+								"657cad438b056f2cdbc143e1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create By Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Doe 33",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "John John John John John John John John John John John John John John John John John John John John John John John John John ",
+									"type": "text"
+								},
+								{
+									"key": "cover",
+									"type": "file",
+									"src": "/C:/Users/MUSTAFA/Downloads/wallpaper-03.jpg"
+								},
+								{
+									"key": "tags",
+									"value": "new",
+									"type": "text"
+								},
+								{
+									"key": "categories",
+									"value": "startups",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "business",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "categories",
+									"value": "business",
+									"type": "text"
+								},
+								{
+									"key": "tags",
+									"value": "infos",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/blogs/",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"blogs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update By Admin",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Doe 677",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "John",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "cover",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								},
+								{
+									"key": "isPublished",
+									"value": "true",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "publish_date",
+									"value": "2023-12-12T19:27:23.185Z",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "category",
+									"value": "sports",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/blogs/657cad4e8b056f2cdbc143e5",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"blogs",
+								"657cad4e8b056f2cdbc143e5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete blogs",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "Taha",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "lastName",
+									"value": "Hamdy",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/E:/Gericht-MultiPages/src/assets/award01.png"
+								},
+								{
+									"key": "city",
+									"value": "alex",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/blogs/657cad318b056f2cdbc143df",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"blogs",
+								"657cad318b056f2cdbc143df"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "services",
+			"item": [
+				{
+					"name": "Get All services",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/services/",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"services",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One services",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{tax-hub_url}}/services/657cc1da63b793c1440b8f4a",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"services",
+								"657cc1da63b793c1440b8f4a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create service",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"tax services & consultations\",\r\n    \"status\":\"start\",\r\n    \"comments\":\"comments df bsd jdf mcv odk c \",\r\n    \"created_by\":\"657ca903ac78bddc5a04edf4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/services/",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"services",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update By Admin",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"status\": \"completed\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/blogs/657cc0bfad2e3a2c4d71d8aa",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"blogs",
+								"657cc0bfad2e3a2c4d71d8aa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete services",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "Taha",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "lastName",
+									"value": "Hamdy",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/E:/Gericht-MultiPages/src/assets/award01.png"
+								},
+								{
+									"key": "city",
+									"value": "alex",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/blogs/657cad318b056f2cdbc143df",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"blogs",
+								"657cad318b056f2cdbc143df"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "papers",
+			"item": [
+				{
+					"name": "Get All papers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/papers/",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"papers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One paper",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{tax-hub_url}}/papers/657cc441879b8be4ee0f9366",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"papers",
+								"657cc441879b8be4ee0f9366"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create paper",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "service",
+									"value": "657cc1da63b793c1440b8f4a",
+									"type": "text"
+								},
+								{
+									"key": "comment",
+									"value": "John John John John John John John John John John John John John John John John John ",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/MUSTAFA/Downloads/web_section.pdf"
+								},
+								{
+									"key": "user",
+									"value": "657cab2928fb35987861b094",
+									"type": "text"
+								},
+								{
+									"key": "document",
+									"value": "tax card",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "business",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "type",
+									"value": "personal",
+									"type": "text"
+								},
+								{
+									"key": "tags",
+									"value": "infos",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/papers/",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"papers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update paper",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "service",
+									"value": "657cc1da63b793c1440b8f4a",
+									"type": "text"
+								},
+								{
+									"key": "comment",
+									"value": "John John John John John John John John John John John John John John John John John ",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/MUSTAFA/Downloads/web_section.pdf"
+								},
+								{
+									"key": "user",
+									"value": "657cab2928fb35987861b094",
+									"type": "text"
+								},
+								{
+									"key": "document",
+									"value": "tax card",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "business",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "type",
+									"value": "personal",
+									"type": "text"
+								},
+								{
+									"key": "tags",
+									"value": "infos",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/papers/657cc64ea75ed0eb21330b38",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"papers",
+								"657cc64ea75ed0eb21330b38"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete paper",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "Taha",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "lastName",
+									"value": "Hamdy",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/E:/Gericht-MultiPages/src/assets/award01.png"
+								},
+								{
+									"key": "city",
+									"value": "alex",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{tax-hub_url}}/papers/657cbfc32548367db1683edb",
+							"host": [
+								"{{tax-hub_url}}"
+							],
+							"path": [
+								"papers",
+								"657cbfc32548367db1683edb"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "seff",
+			"value": "http://localhost:4000/seff-academy/v1.0"
+		}
+	]
+}
