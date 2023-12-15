@@ -3,38 +3,36 @@ const { Schema } = mongoose;
 const { enum_BlogsCategory } = require('../config/enums');
 const { deleteUploadedFile } = require('../utils/deleteUploadedFile');
 
-const articleSchema = new Schema({
+const blogSchema = new Schema({
 	title: {
 		type: String,
-		required: [true, 'please provide the article category'],
+		required: [true, 'please provide the blog category'],
 		trim: true,
 	},
 	// category: {
 	// 	type: String,
 	// 	enum: enum_BlogsCategory,
-	// 	required: [true, 'please provide the article category'],
+	// 	required: [true, 'please provide the blog category'],
 	// 	trim: true,
 	// },
-	categories: [
-		{
-			type: String,
-			// enum: enum_ArticlesCategory,
-			required: [true, 'please provide the article category'],
-			trim: true,
-		},
-	],
-	content: [
-		{
-			type: String,
-			required: [true, 'please provide the article content'],
-		},
-	],
-	tags: {
+	content: {
 		type: String,
-		required: [true, 'please provide the article content'],
+		required: [true, 'please provide the blog content'],
 	},
-	// publish_date: Date,
+
+	categories: {
+		type: [String],
+		enum: enum_BlogsCategory,
+		required: [true, 'please provide the blog categories'],
+		trim: true,
+	},
+	tags: {
+		type: [String],
+		required: [true, 'please provide the blog tags'],
+		trim: true,
+	},
 	cover: String, // image
+	// publish_date: Date,
 	// publish_by: {
 	// 	type: mongoose.Types.ObjectId,
 	// 	required: true,
@@ -46,9 +44,9 @@ const articleSchema = new Schema({
 	// },
 });
 
-articleSchema.pre('findOneAndUpdate', deleteUploadedFile);
-articleSchema.pre('findOneAndDelete', deleteUploadedFile);
+blogSchema.pre('findOneAndUpdate', deleteUploadedFile);
+blogSchema.pre('findOneAndDelete', deleteUploadedFile);
 
-const Article = mongoose.model('Article', articleSchema);
+const Blog = mongoose.model('blog', blogSchema);
 
-module.exports = Article;
+module.exports = Blog;

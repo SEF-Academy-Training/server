@@ -5,106 +5,59 @@ const { paginate } = require('../utils/pagination3');
 
 const blogController = {
 	getAllBlogs: asyncHandler(async (req, res) => {
-		const userRole = req.user?.role;
-
-		let queryRole = {};
-		if (userRole == 'Admin') {
-			queryRole = {};
-		} else {
-			queryRole = { isPublished: true };
-		}
-
-		const { error, data, pagination } = await paginate(Blog, req, queryRole);
+		const { error, data, pagination } = await paginate(Blog, req);
 		if (error) {
-			return res.status(404).json({ success: false, error });
+			return res.status(404).send({ success: false, error });
 		}
 
-		res.status(200).json({ success: true, data, pagination });
+		res.status(200).send({ success: true, data, pagination });
 	}),
 
 	getBlog: asyncHandler(async (req, res) => {
-		const userRole = req.user?.role;
-
-		let queryRole = {};
-		if (userRole == 'Admin') {
-			queryRole = {};
-		} else {
-			queryRole = { isPublished: true };
+		const blog = await Blog.findOne({ _id: req.params.id });
+		if (!blog) {
+			return res.status(404).send({ success: false, error: 'Blog not found' });
 		}
 
-		const Blog = await Blog.findOne({ _id: req.params.id, ...queryRole });
-		if (!Blog) {
-			return res.status(404).json({ success: false, error: 'Blog not found' });
-		}
-
-		res.status(200).json({ success: true, data: Blog });
+		res.status(200).send({ success: true, data: blog });
 	}),
 
 	createBlog: asyncHandler(async (req, res) => {
 		if (req.file) {
-			req.body.cover = `/Blogs/${req.file.filename}`;
+			req.body.cover = `/blogs/${req.file.filename}`;
 		}
 
-		let status = false;
-		if (req.body?.publish_date) {
-			status = new Date(req.body?.publish_date) <= Date.now();
-		} else {
-			status = req.body?.isPublished;
-		}
-
-		const newBlog = new Blog({
-			...req.body,
-			isPublished: status,
-		});
+		const newBlog = await Blog.create(req.body);
 
 		if (!newBlog) {
-			return res.status(400).json({
+			return res.status(400).send({
 				success: false,
 				message: 'Something went wrong while create Blog',
 			});
 		}
 
-		const savedBlog = await newBlog.save();
-		res.status(201).json({
+		res.status(201).send({
 			success: true,
-			data: savedBlog,
-			message: 'Blog was created successfully',
+			data: newBlog,
+			message: 'new Blog was created successfully',
 		});
 		infoLogger.info(
-			`Blog ${savedBlog?.title} | ${savedBlog?._id} | Blog was created successfully by user ${req.user?._id}`
+			`Blog ${newBlog?.title} | ${newBlog?._id} | new Blog was created successfully by user ${req.user?._id}`
 		);
 	}),
 
 	updateBlog: asyncHandler(async (req, res) => {
 		if (req.file) {
-			req.body.cover = `/Blogs/${req.file.filename}`;
+			req.body.cover = `/blogs/${req.file.filename}`;
 		}
 		const { id } = req.params;
 
-		// const Blog = await Blog.findById(_id);
-
-		// if (!Blog) {
-		// 	return res.status(404).json({ success: false, error: 'Blog not found' });
-		// }
-
-		// if (userId !== Blog.creatorId && !req.user.isAdmin) {
-		// 	return res.status(403).json({ error: 'Permission denied' });
-		// }
-
-		let status = false;
-		if (req.body?.publish_date) {
-			status = new Date(req.body?.publish_date) <= Date.now();
-		} else {
-			status = req.body?.isPublished;
-		}
-		const updatedBlog = await Blog.findByIdAndUpdate(
-			{ _id: id },
-			{ ...req.body, isPublished: status },
-			{ new: true }
-		);
+		const updatedBlog = await Blog.findByIdAndUpdate({ _id: id }, req.body, {
+			new: true,
+		});
 
 		if (!updatedBlog) {
-			return res.status(404).json({ success: false, error: 'Blog not found' });
+			return res.status(404).send({ success: false, error: 'Blog not found' });
 		}
 
 		res.status(201).send({
@@ -123,10 +76,10 @@ const blogController = {
 		const deletedBlog = await Blog.findByIdAndDelete({ _id: id });
 
 		if (!deletedBlog) {
-			return res.status(404).json({ success: false, error: 'Blog not found' });
+			return res.status(404).send({ success: false, error: 'Blog not found' });
 		}
 
-		res.status(201).json({
+		res.status(201).send({
 			success: true,
 			message: 'Blog was deleted successfully',
 		});

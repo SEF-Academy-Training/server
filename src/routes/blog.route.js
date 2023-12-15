@@ -7,8 +7,6 @@ const validateObjectId = require('../middlewares/validateObjectIdMiddleware');
 const blogController = require('../controllers/blog.controller');
 const { newBlogValidation, updateBlogValidation } = require('../validation/blog.validation');
 
-
-
 // -------------------------------------- all blogs routes ----------------------
 router.post(
 	'/',
@@ -18,7 +16,6 @@ router.post(
 	blogController.createBlog
 );
 router.get('/', authenticate, blogController.getAllBlogs);
-
 
 // single blogs routes operations --
 router.get('/:id', authenticate, validateObjectId, blogController.getBlog);
