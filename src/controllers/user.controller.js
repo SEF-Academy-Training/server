@@ -1,6 +1,5 @@
 const { User } = require("../models/user.model");
-const { paginate } = require("../utils/pagination");
-const { genUserId } = require("../utils/userIdGenerator");
+const { paginate } = require("../utils/pagination"); 
 const bcrypt = require('bcrypt')
 const asyncHandler = require('express-async-handler');
 module.exports = {
@@ -15,18 +14,16 @@ module.exports = {
         res.status(200).json({ success: true, data: user })
     }),
     createByAdminCtrl: asyncHandler(async (req, res) => {
-        const { userId, mobileNumber } = req.body
-        const existingUser = await User.findOne({ $or: [{ userId }, { mobileNumber }] })
-        if (existingUser) return res.status(400).json({ success: false, error: `This ${existingUser.userId === userId ? "userId" : "MobileNumber"} already in use ..!` })
-        let generatedUserId
-        if (userId) {
-            const user = await User.exists({ userId });
-            if (user) return res.status(400).json({ success: false, error: "userId already in use." });
-            generatedUserId = userId;
-        } else {
-            generatedUserId = await genUserId();
-        }
-        const newUser = new User({ ...req.body, userId: generatedUserId })
+        const { userEmail } = req.body
+        const existingUser = await User.findOne({ $or: [{ userEmail } ] })
+        if (existingUser) return res.status(400).json({ success: false, error: `This ${existingUser.userEmail === userEmail ? "userEmail" : "MobileNumber"} already in use ..!` })
+ 
+        if (userEmail) {
+            const user = await User.exists({ userEmail });
+            if (user) return res.status(400).json({ success: false, error: "User Email already in use." });
+   
+        }  
+        const newUser = new User({ ...req.body  })
         await newUser.save()
         res.status(201).json({ success: true, data: newUser })
     }),

@@ -20,8 +20,8 @@ app.get('/',(req,res)=>{
     //test error
  throw new Error('error')
 })
-app.use("/seff-academy/v1.0", require("../routes"))
-app.use('/seff-academy/uploads', express.static(path.join(__dirname, '../uploads')));
-app.use(notFoundUrl)
+app.use("/tax-hub", require("../routes"))
+app.use('/tax-hub/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use(notFoundUrl) 
 app.use(errorHandler)
 module.exports = app;

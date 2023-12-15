@@ -1,17 +1,26 @@
 const { User } = require("../models/user.model");
-const asyncHandler = require('express-async-handler');
-const { genUserId } = require("../utils/userIdGenerator");
+const asyncHandler = require('express-async-handler'); 
 const jwt = require('jsonwebtoken')
+
 module.exports = {
     registerCtrl: asyncHandler(async (req, res) => {
-        const uId = await genUserId()
-        const newUser = new User({ ...req.body, userId: uId });
+        const { userEmail } = req.body;
+        
+        const existingUser = await User.findOne({ userEmail });
+    
+        if (existingUser) {
+            return res.status(400).json({ success: false, message: 'User with this email already exists.' });
+        }
+    
+        const newUser = new User({ ...req.body });
         await newUser.save();
-        res.status(201).json({ success: true, message: "Account successfully created. Please login." });
+    
+        res.status(201).json({ success: true, message: 'Account successfully created. Please login.' });
     }),
+
     loginCtrl: asyncHandler(async (req, res) => {
-        const { userId, password } = req.body;
-        const userExist = await User.findOne({ userId });
+        const { userEmail, password } = req.body;
+        const userExist = await User.findOne({ userEmail });
         if (!userExist) return res.status(404).json({ success: false, error: "User not found." });
         if (userExist.accountStatus === "Inactive") return res.status(403).json({ success: false, message: "User Account is inActive" })
         const matchPassword = await userExist.comparePassword(password);
@@ -21,16 +30,28 @@ module.exports = {
         res.cookie('refreshToken', refreshToken, {withCredentials: true, httpOnly: false, });
         res.status(200).json({ success: true, data: userExist });
     }),
+
+
+
+
     logoutCtrl: asyncHandler(async (req, res) => {
         res.clearCookie("accessToken");
         res.clearCookie("refreshToken");
         res.send({ success: true });
     }),
+
+
+
+
     getCurrentUserCtrl: asyncHandler(async (req, res) => {
         const user = await User.findOne({ _id: req.user._id });
         if (!user) return res.status(404).json({ success: false, error: "user not found." })
         res.status(200).json({ success: true, data: user });
     }),
+
+
+
+
     refreshAccessTokenCtrl: asyncHandler(async (req, res) => {
         const refreshToken = req.cookies.refreshToken;
         if (!refreshToken) return res.status(401).json({ success: false, error: 'No token provided' });

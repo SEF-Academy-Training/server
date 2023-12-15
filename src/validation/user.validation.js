@@ -1,82 +1,86 @@
 const Joi = require('joi');
-const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
-const userIdRegex = /^[0-9]{10}$/
+const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/ 
+
 module.exports = {
     createByAdminSchema: Joi.object({
-        lastName: Joi.string().required().messages({
-            'any.required': 'Last name is required.',
-            'string.empty': 'Last name must not be empty.',
-        }),
-        firstName: Joi.string().required().messages({
-            'any.required': 'First name is required.',
-            'string.empty': 'First name must not be empty.',
-        }),
-        score: Joi.number().integer().required().messages({
-            'any.required': 'score is required.',
-            'string.empty': 'score must not be empty.',
-        }),
-        accountStatus: Joi.string().valid('Active', 'Inactive').required().messages({
-            'any.required': 'Account status is required.',
-            'any.only': 'Account status must be either "Active" or "Inactive".'
-        }),
-        role: Joi.string().valid('Admin', 'Instructor', 'Student').required().messages({
-            'any.required': 'Role is required.',
-            'any.only': 'Invalid role. Allowed values are: Admin, Instructor, Student.'
-        }),
-        mobileNumber: Joi.number().integer().required().messages({
-            'any.required': 'Mobile number is required.',
-            'number.base': 'Mobile number must be a valid integer.',
-        }),
-        userId: Joi.string().pattern(userIdRegex).allow('').messages({
-            'string.base': 'User ID must be a string.',
-            'string.pattern': 'User ID must be a 10-digit number.'
+        userName: Joi.string().required().messages({
+            'any.required': 'User Name is required.',
+            'string.empty': 'User Name must not be empty.',
+        }),    
+        userEmail: Joi.string().email().required().messages({
+            'string.email': 'Must enter a valid email address.',
+            'any.required': 'User Email is required.',
+            'string.empty': 'User Email must not be empty.',
         }),
         password: Joi.string().pattern(passwordRegex).required().messages({
             'any.required': 'Password is required.',
             'string.empty': 'Password must not be empty.',
             'string.pattern.base': 'Password must contain at least 8 characters, including one digit, one lowercase letter, one uppercase letter, and one special character.'
-        })
-    }),
-    updateByAdminSchema: Joi.object({
-        lastName: Joi.string().messages({
-            'string.empty': 'Last name must not be empty.',
         }),
-        firstName: Joi.string().messages({
-            'string.empty': 'First name must not be empty.',
+        country: Joi.string().required().messages({
+            'any.required': 'Country is required.',
+            'string.empty': 'Country must not be empty.',
+        }),   
+        role: Joi.string().valid('Admin', 'User').required().messages({
+            'any.required': 'Role is required.',
+            'any.only': 'Invalid role. Allowed values are: Admin, User'
         }),
-        score: Joi.number().integer().messages({
-            'string.empty': 'score must not be empty.',
-        }),
-        accountStatus: Joi.string().valid('Active', 'Inactive').messages({
-            'any.only': 'Account status must be either "Active" or "Inactive".'
-        }),
-        role: Joi.string().valid('Admin', 'Editor', 'Instructor', 'Student').messages({
-            'any.only': 'Invalid role. Allowed values are: Admin, Editor, Instructor, Student.'
-        }),
-        mobileNumber: Joi.number().integer().messages({
+        mobileNumber: Joi.number().integer().required().messages({
+            'any.required': 'Mobile number is required.',
             'number.base': 'Mobile number must be a valid integer.',
         }),
-        userId: Joi.string().pattern(userIdRegex).messages({
-            'string.pattern': 'User ID must be a 10-digit number.'
+    }),
+    updateByAdminSchema: Joi.object({
+        userName: Joi.string().required().messages({ 
+            'string.empty': 'User Name must not be empty.',
+        }),    
+        userEmail: Joi.string().email().required().messages({
+            'string.email': 'Must enter a valid email address.',
+            'any.required': 'User Email is required.',
+            'string.empty': 'User Email must not be empty.',
         }),
-        password: Joi.string().pattern(passwordRegex).messages({
+        password: Joi.string().pattern(passwordRegex).required().messages({
+            'any.required': 'Password is required.',
+            'string.empty': 'Password must not be empty.',
             'string.pattern.base': 'Password must contain at least 8 characters, including one digit, one lowercase letter, one uppercase letter, and one special character.'
-        })
+        }),
+        country: Joi.string().required().messages({
+            'any.required': 'Country is required.',
+            'string.empty': 'Country must not be empty.',
+        }),   
+        role: Joi.string().valid('Admin', 'User').required().messages({
+            'any.required': 'Role is required.',
+            'any.only': 'Invalid role. Allowed values are: Admin, User'
+        }), 
+        mobileNumber: Joi.number().integer().required().messages({
+            'any.required': 'Mobile number is required.',
+            'number.base': 'Mobile number must be a valid integer.',
+        }),
     }),
     updateUserProfileSchema: Joi.object({
-        city: Joi.string(),
-        major: Joi.string(),
-        about: Joi.string(),
-        country: Joi.string(),
-        university: Joi.string(),
-        nationality: Joi.string(),
-        age: Joi.number().integer().messages({
-            'number.base': 'Age must be a valid integer.',
+        userName: Joi.string().required().messages({ 
+            'string.empty': 'User Name must not be empty.',
+        }),    
+        userEmail: Joi.string().email().required().messages({
+            'string.email': 'Must enter a valid email address.',
+            'any.required': 'User Email is required.',
+            'string.empty': 'User Email must not be empty.',
         }),
-        graduationYear: Joi.number().integer().messages({
-            'number.base': 'Graduation year must be a valid integer.',
+        password: Joi.string().pattern(passwordRegex).required().messages({
+            'any.required': 'Password is required.',
+            'string.empty': 'Password must not be empty.',
+            'string.pattern.base': 'Password must contain at least 8 characters, including one digit, one lowercase letter, one uppercase letter, and one special character.'
         }),
-        mobileNumber: Joi.number().integer().messages({
+        country: Joi.string().required().messages({
+            'any.required': 'Country is required.',
+            'string.empty': 'Country must not be empty.',
+        }),   
+        role: Joi.string().valid('Admin', 'User').required().messages({
+            'any.required': 'Role is required.',
+            'any.only': 'Invalid role. Allowed values are: Admin, User'
+        }), 
+        mobileNumber: Joi.number().integer().required().messages({
+            'any.required': 'Mobile number is required.',
             'number.base': 'Mobile number must be a valid integer.',
         }),
     })

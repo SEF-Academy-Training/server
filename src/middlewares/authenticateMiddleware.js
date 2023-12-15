@@ -12,7 +12,7 @@ const authenticate = (req, res, next) => {
 const authorizeRoles = (allowedRole) => (req, res, next) => {
 
   authenticate(req, res, () => {
-    const hasMatchingRole = req.user.role === allowedRole
+    const hasMatchingRole = req.user.role === allowedRole 
     if (hasMatchingRole) {
       next();
     } else {
@@ -24,6 +24,5 @@ const authorizeRoles = (allowedRole) => (req, res, next) => {
 module.exports = {
 	authenticate,
 	authorizeAdmin: authorizeRoles('Admin'),
-	authorizeInstructor: authorizeRoles('Instructor'),
-	authorizeStudent: authorizeRoles('Student'),
+	authorizeUser: authorizeRoles('User'), 
 };
