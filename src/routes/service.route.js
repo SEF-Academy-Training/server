@@ -1,34 +1,34 @@
 const express = require('express');
 const router = express.Router();
-const { upload } = require('../middlewares/uploadMiddleware');
 const { validationMiddleware } = require('../middlewares/validationMiddleware');
 const { authorizeAdmin, authenticate } = require('../middlewares/authenticateMiddleware');
 const validateObjectId = require('../middlewares/validateObjectIdMiddleware');
-const serviceController = require('../controllers/Service.controller');
 const {
 	newServiceValidation,
 	updateServiceValidation,
 } = require('../validation/service.validation');
+const {
+	getAllServices,
+	updateService,
+	deleteService,
+	CreateService,
+	getService,
+} = require('../controllers/service.controller');
 
 // -------------------------------------- all Services routes ----------------------
 router
-	.post(
-		'/',
-		// authorizeAdmin,
-		authenticate,
-		validationMiddleware(newServiceValidation),
-		serviceController.createService
-	)
-	.get(serviceController.getAllServices);
-// router.get('/', authenticate, serviceController.getAllServices);
+	.route('/')
+	.all(authenticate)
+	.post(validationMiddleware(newServiceValidation), CreateService)
+	.get(getAllServices);
 
 // single Services routes operations --
-router.get('/:id', authenticate, validateObjectId, serviceController.getService);
+router.get('/:id', authenticate, validateObjectId, getService);
 
 router
 	.route('/:id')
 	.all(authorizeAdmin, validateObjectId)
-	.patch(validationMiddleware(updateServiceValidation), serviceController.updateService)
-	.delete(serviceController.deleteService);
+	.patch(validationMiddleware(updateServiceValidation), updateService)
+	.delete(deleteService);
 
 module.exports = router;

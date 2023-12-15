@@ -1,21 +1,38 @@
-async function paginate(model, req) {
-    const page = +req.query.page || 1;
-    const limit = +req.query.limit || 10;
-    const startIndex = (page - 1) * limit;
-    const { fieldName, fieldValue, searchBy, searchValue } = req.query;
-    console.log({ fieldName, fieldValue, searchBy, searchValue })
-    const dynamicQuery = fieldValue && fieldName ? { [fieldName]: fieldValue } : {};
-    const searchQuery = searchBy ? { [searchBy]: { $regex: new RegExp(searchValue, 'i') } } : {};
-    const transformedQuery = { ...dynamicQuery, ...searchQuery };
-    const totalDocs = await model.countDocuments(transformedQuery);
-    const pagination = { total: totalDocs, limit, page, pages: Math.ceil(totalDocs / limit) };
-  console.log({transformedQuery,totalDocs})
-    if (startIndex > totalDocs) { return { error: 'Page not found' }; }
-    const data = await model.find({ ...transformedQuery, _id: { $ne: req.user._id } })
-      .limit(limit)
-      .skip(startIndex)
-      .sort({ createdAt: -1 });
-  
-    return { data, pagination };
-  }
-module.exports = { paginate }
+async function paginate(model, req, quire = {}, populateOptions = null) {
+	const page = +req.query.page || 1;
+	const limit = +req.query.limit || 10;
+	const startIndex = (page - 1) * limit;
+	const { filter = {}, searchBy = '', searchValue = '' } = req.query;
+
+	const searchQuery = searchValue
+		? { [searchBy]: { $regex: new RegExp(searchValue, 'i') } }
+		: {};
+
+	const transformedQuery = { ...quire, ...filter, ...searchQuery };
+	delete transformedQuery.page;
+	delete transformedQuery.limit;
+	console.log('transformedQuery p', transformedQuery);
+
+	const totalDocs = await model.countDocuments(transformedQuery);
+	const pagination = {};
+	if (startIndex > totalDocs) return { error: 'Page not found' };
+	pagination.total = totalDocs;
+	pagination.limit = limit;
+	pagination.page = page;
+	pagination.pages = Math.ceil(totalDocs / limit);
+	let query = model
+		.find({ ...transformedQuery, _id: { $ne: req.user._id } })
+		// .find(transformedQuery)
+		.limit(limit)
+		.skip(startIndex)
+		.sort({ createdAt: -1 });
+	// .exec();
+
+	if (populateOptions) {
+		query = query.populate(populateOptions);
+	}
+
+	const data = await query.exec();
+	return { data, pagination };
+}
+module.exports = { paginate };

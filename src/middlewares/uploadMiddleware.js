@@ -5,15 +5,18 @@ const storageEngine = multer.diskStorage({
   destination: function (req, file, cb) {
     let dest;
     switch (req.baseUrl) {
-      case "/seff-academy/v1.0/users":
-        dest = "src/uploads/users";
-        break;
-      case "/seff-academy/v1.0/blogs":
-        dest = "src/uploads/blogs";
-        break;
-      default:
-        dest = "uploads";
-    }
+			case '/tax-hub/users':
+				dest = 'src/uploads/users';
+				break;
+			case '/tax-hub/blogs':
+				dest = 'src/uploads/blogs';
+				break;
+			case '/tax-hub/papers':
+				dest = 'src/uploads/papers';
+				break;
+			default:
+				dest = 'uploads';
+		}
     cb(null, dest);
   },
 

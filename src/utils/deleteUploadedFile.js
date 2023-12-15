@@ -6,7 +6,7 @@ async function deleteFile(path) {
 }
 
 const deleteUploadedFile = async function () {
-  const imageFields = ['profileImage', 'coverImage', 'image', 'certificate_file', 'companyLogo', 'cover', 'cv'];
+  const imageFields = ['profileImage', 'coverImage', 'image', 'file', 'companyLogo', 'cover'];
   let foundImageField = null;
   
   try {

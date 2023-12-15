@@ -14,6 +14,7 @@ const serviceSchema = new Schema(
 		code: {
 			type: String,
 			required: [true, 'please provide the service code'],
+			// unique: [true, 'Service code is already exist please provide another one'],
 		},
 
 		status: {
@@ -26,11 +27,7 @@ const serviceSchema = new Schema(
 
 		comments: String,
 
-		created_by: {
-			type: mongoose.Types.ObjectId,
-			required: true,
-			ref: 'User',
-		},
+		created_by: { type: mongoose.Types.ObjectId, ref: 'User' },
 	},
 	{ timestamps: true }
 );

@@ -1,27 +1,29 @@
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
-const notFoundUrl=require("../routes/notFoundRoutes")
+const notFoundUrl = require('../routes/notFoundRoutes');
 const path = require('path');
-const cors =require('cors')
+const cors = require('cors');
 const { httpLogger } = require('../services/httpLoggerService');
 const { errorHandler } = require('../middlewares/errorHandlerMiddleware');
 app.use(express.json());
-app.use(cors({
-    origin: ["http://localhost:3000"],
-    methods: ["GET", "POST", "PUT","PATCH", "DELETE"],
-    credentials: true,
-}))
+app.use(
+	cors({
+		origin: ['http://localhost:3000'],
+		methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+		credentials: true,
+	})
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ limit: '10mb' }));
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(httpLogger);
-app.get('/',(req,res)=>{
-    //test error
- throw new Error('error')
-})
-app.use("/tax-hub", require("../routes"))
+app.get('/', (req, res) => {
+	//test error
+	throw new Error('error');
+});
+app.use('/tax-hub', require('../routes'));
 app.use('/tax-hub/uploads', express.static(path.join(__dirname, '../uploads')));
-app.use(notFoundUrl) 
-app.use(errorHandler)
+app.use(notFoundUrl);
+app.use(errorHandler);
 module.exports = app;

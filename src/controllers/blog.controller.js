@@ -1,7 +1,7 @@
 const Blog = require('../models/blog.model');
 const asyncHandler = require('express-async-handler');
 const { infoLogger } = require('../services/infoLoggerService');
-const { paginate } = require('../utils/pagination3');
+const { paginate } = require('../utils/pagination');
 
 const blogController = {
 	getAllBlogs: asyncHandler(async (req, res) => {

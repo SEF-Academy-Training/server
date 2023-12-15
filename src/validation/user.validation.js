@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/ 
+// const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/ 
 
 module.exports = {
     createByAdminSchema: Joi.object({
@@ -12,7 +12,9 @@ module.exports = {
             'any.required': 'User Email is required.',
             'string.empty': 'User Email must not be empty.',
         }),
-        password: Joi.string().pattern(passwordRegex).required().messages({
+        password: Joi.string()
+        // .pattern(passwordRegex)
+        .required().messages({
             'any.required': 'Password is required.',
             'string.empty': 'Password must not be empty.',
             'string.pattern.base': 'Password must contain at least 8 characters, including one digit, one lowercase letter, one uppercase letter, and one special character.'
@@ -39,7 +41,9 @@ module.exports = {
             'any.required': 'User Email is required.',
             'string.empty': 'User Email must not be empty.',
         }),
-        password: Joi.string().pattern(passwordRegex).required().messages({
+        password: Joi.string()
+        // .pattern(passwordRegex)
+        .required().messages({
             'any.required': 'Password is required.',
             'string.empty': 'Password must not be empty.',
             'string.pattern.base': 'Password must contain at least 8 characters, including one digit, one lowercase letter, one uppercase letter, and one special character.'
@@ -66,7 +70,9 @@ module.exports = {
             'any.required': 'User Email is required.',
             'string.empty': 'User Email must not be empty.',
         }),
-        password: Joi.string().pattern(passwordRegex).required().messages({
+        password: Joi.string()
+        // .pattern(passwordRegex)
+        .required().messages({
             'any.required': 'Password is required.',
             'string.empty': 'Password must not be empty.',
             'string.pattern.base': 'Password must contain at least 8 characters, including one digit, one lowercase letter, one uppercase letter, and one special character.'
