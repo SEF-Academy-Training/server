@@ -8,55 +8,48 @@ const newBlogValidation = Joi.object({
 		'any.max': 'Blog name must be between 3 and 100 characters',
 	}),
 
-	category: Joi.string()
-		.valid(...enum_BlogsCategory)
-		.required()
-		.trim()
-		.messages({
-			'any.required': 'Please provide a status for this Blog',
-			'any.only': `Must be one of the following values: ${enum_BlogsCategory}`,
-		}),
+	categories: Joi.array().items(
+		Joi.string()
+			.valid(...enum_BlogsCategory)
+			.trim()
+			.required()
+			.messages({
+				'any.required': 'Please provide a status for this Blog',
+				'any.only': `Must be one of the following values: ${enum_BlogsCategory}`,
+			})
+	),
+	tags: Joi.array().items(Joi.string().trim().required()).messages({
+		'any.required': 'Please provide a status for this Blog',
+	}),
 
 	content: Joi.string().required().messages({
 		'any.required': 'Please provide a content for this Blog',
 	}),
 
 	cover: Joi.string(),
-
-	publish_date: Joi.date().default(Date.now()),
-
-	// publish_by: Joi.string()
-	// 	.required()
-	// 	.messages({ 'any.required': 'Please select the Instructor' }),
-
-	isPublished: Joi.boolean().required().messages({
-		'any.required': 'Please specify if you want to publish or draft',
-	}),
 });
 
 const updateBlogValidation = Joi.object({
-	title: Joi.string().min(3).max(100).messages({
-		'any.min': 'Blog name must be between 3 and 100 characters',
-		'any.max': 'Blog name must be between 3 and 100 characters',
+	title: Joi.string().min(3).max(150).messages({
+		'any.min': 'Blog name must be between 3 and 150 characters',
+		'any.max': 'Blog name must be between 3 and 150 characters',
 	}),
 
-	category: Joi.string()
-		.valid(...enum_BlogsCategory)
-		.trim()
-		.messages({
-			'any.required': 'Please provide a category for this Blog',
-			'any.only': `Must be one of the following values: ${enum_BlogsCategory}`,
-		}),
+	categories: Joi.array().items(
+		Joi.string()
+			.valid(...enum_BlogsCategory)
+			.trim()
+			.messages({
+				'any.only': `Must be one of the following values: ${enum_BlogsCategory}`,
+			}
+		)
+	),
+
+	tags: Joi.array().items(Joi.string().trim()),
 
 	content: Joi.string(),
 
 	cover: Joi.string(),
-
-	publish_date: Joi.date().default(Date.now()),
-
-	// publish_by: Joi.string(),
-
-	isPublished: Joi.boolean(),
 });
 
 module.exports = { newBlogValidation, updateBlogValidation };
