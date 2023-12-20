@@ -111,21 +111,21 @@ module.exports = {
 			return res.status(404).json({ success: false, error: 'user not found.' });
 		res.status(200).json({ success: true, data: deletedUser._id });
 	}),
-	contactUserCtrl : asyncHandler(async (req, res) => {
-        const { userName, userEmail } = req.user; 
-        console.log(req.user);
-        const title = req.body.title
-        const subject = req.body.subject
-        const message = req.body.message 
-        
-        try { 
-            sendMailFun( userName , userEmail , title , subject , message) 
-            res.send()
-          console.log('Contact form data saved to the database');
-        } catch (error) {
-          console.error('Error saving contact form data:', error);
-          return res.status(500).json({ error: 'Internal Server Error' });
-        }
-     
-      }),
+	 contactUserCtrl : asyncHandler(async (req, res) => {
+		const { userName, userEmail } = req.user;
+		console.log(req.user);
+		const title = req.body.title;
+		const subject = req.body.subject;
+		const message = req.body.message;
+	  
+		try {
+		  await sendMailFun(userName, userEmail, title, subject, message);
+		  console.log('Contact form data saved to the database');
+		  res.status(200).json({ success: 'Email sent successfully' });
+		} catch (error) {
+		  console.error('Error sending email:', error);
+		  res.status(500).json({ error: 'Internal Server Error' });
+		}
+	  }),
+	  
 };
