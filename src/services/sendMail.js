@@ -23,16 +23,16 @@ const mailOptions = {
   text: "Hello world?",  
   html: "<b>Hello world?</b>",  
   attachments:[
-    {
-      filename : 'test.pdf' , 
-      path : path.join(__dirname, 'test.pdf'),
-      contentType:'application/pdf'
-    },
-    {
-      filename : 'test.png' , 
-      path : path.join(__dirname, 'test.png'),
-      contentType:'image/pdf'
-    }
+    // {
+    //   filename : 'test.pdf' , 
+    //   path : path.join(__dirname, 'test.pdf'),
+    //   contentType:'application/pdf'
+    // },
+    // {
+    //   filename : 'test.png' , 
+    //   path : path.join(__dirname, 'test.png'),
+    //   contentType:'image/pdf'
+    // }
   ], 
 }
 
