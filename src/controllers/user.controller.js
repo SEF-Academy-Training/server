@@ -32,35 +32,45 @@ module.exports = {
 					.status(400)
 					.json({ success: false, error: 'User Email already in use.' });
 		}
-		const newUser = new User({ ...req.body });
+		const totalUsers = await User.countDocuments();
+
+		const newUser = new User({ ...req.body, userNumber: totalUsers + 1 });
 		await newUser.save();
 		res.status(201).json({ success: true, data: newUser });
 	}),
 	updateByAdminCtrl: asyncHandler(async (req, res) => {
-		const { password, mobileNumber, userId } = req.body;
+		const { password, userEmail } = req.body;
 		let user = await User.findById(req.params.id);
-		if (!user) return res.status(404).json({ success: false, error: 'User not found' });
-		let existingUser = await User.findOne({
-			_id: { $ne: req.params.id },
-			$or: [{ userId }, { mobileNumber }],
-		});
-		if (existingUser)
-			return res.status(400).json({
-				success: false,
-				error: `This ${
-					existingUser.userId === userId ? 'User ID' : 'MobileNumber'
-				} already in use ..!`,
-			});
-		if (password) {
-			const genSalt = await bcrypt.genSalt(10);
-			const hash = await bcrypt.hash(password, genSalt);
-			req.body.password = hash;
+	  
+		if (!user) {
+		  return res.status(404).json({ success: false, error: 'User not found' });
 		}
+	  
+		// Check if the provided email is already in use by another user
+		if (userEmail && user.userEmail !== userEmail) {
+		  const existingUser = await User.findOne({ userEmail });
+	  
+		  if (existingUser) {
+			return res.status(400).json({
+			  success: false,
+			  error: 'Email already in use by another user.',
+			});
+		  }
+		}
+	  
+		if (password) {
+		  const genSalt = await bcrypt.genSalt(10);
+		  const hash = await bcrypt.hash(password, genSalt);
+		  req.body.password = hash;
+		}
+	  
 		const updatedUser = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
-			new: true,
+		  new: true,
 		});
+	  
 		res.status(200).json({ success: true, data: updatedUser });
-	}),
+	  }),
+	  
 	updateUserProfileCtrl: asyncHandler(async (req, res) => {
 		console.log('req.file', req.file);
 		if (req.file) req.body.profileImage = `users/${req.file.filename}`;
