@@ -3,7 +3,6 @@ async function paginate(model, req, quire = {}, populateOptions = null) {
 	const limit = +req.query.limit || 10;
 	const startIndex = (page - 1) * limit;
 	const { filter = {}, searchBy = '', searchValue = '' } = req.query;
-
 	const searchQuery = searchValue
 		? { [searchBy]: { $regex: new RegExp(searchValue, 'i') } }
 		: {};
