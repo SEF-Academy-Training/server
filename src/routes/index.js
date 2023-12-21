@@ -4,6 +4,6 @@ router.use('/users', require('./user.route'));
 router.use('/blogs', require('./blog.route'));
 router.use('/services', require('./service.route'));
 router.use('/papers', require('./paper.route'));
-router.use('/chat', require('./chat.route'));
+router.use('/chat', require('./chat.route2'));
 
 module.exports = router;
