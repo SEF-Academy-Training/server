@@ -17,14 +17,11 @@ module.exports = {
             'string.empty': 'Password must not be empty.',
             'string.pattern.base': 'Password must contain at least 8 characters, including one digit, one lowercase letter, one uppercase letter, and one special character.'
         }),
-        country: Joi.string().required().messages({
-            'any.required': 'Country is required.',
-            'string.empty': 'Country must not be empty.',
+        company: Joi.string().required().messages({
+            'any.required': 'company is required.',
+            'string.empty': 'company must not be empty.',
         }),   
-        mobileNumber: Joi.number().integer().required().messages({
-            'any.required': 'Mobile number is required.',
-            'number.base': 'Mobile number must be a valid integer.',
-        }),
+ 
     }),
     loginSchema: Joi.object({
         userEmail: Joi.string().email().required().messages({

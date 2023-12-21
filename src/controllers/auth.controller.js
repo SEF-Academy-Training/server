@@ -3,20 +3,34 @@ const asyncHandler = require('express-async-handler');
 const jwt = require('jsonwebtoken')
 
 module.exports = {
-    registerCtrl: asyncHandler(async (req, res) => {
+      registerCtrl : asyncHandler(async (req, res) => {
         const { userEmail } = req.body;
-        
+      
+        // Check if the user with the given email already exists
         const existingUser = await User.findOne({ userEmail });
-    
+      
         if (existingUser) {
-            return res.status(400).json({ success: false, message: 'User with this email already exists.' });
+          return res.status(400).json({ success: false, message: 'User with this email already exists.' });
         }
-    
-        const newUser = new User({ ...req.body });
-        await newUser.save();
-    
-        res.status(201).json({ success: true, message: 'Account successfully created. Please login.' });
-    }),
+      
+        try {
+          // Find the total number of users
+          const totalUsers = await User.countDocuments();
+      
+          // Create a new user with the generated user number
+          const newUser = new User({ ...req.body, userNumber: totalUsers + 1 });
+      
+          // Save the new user to the database
+          await newUser.save();
+      
+          res.status(201).json({ success: true, message: 'Account successfully created. Please login.' });
+        } catch (error) {
+          // Handle any errors that occur during the save operation
+          console.error(error);
+          res.status(500).json({ success: false, message: 'Internal server error.' });
+        }
+      }) ,
+      
 
     loginCtrl: asyncHandler(async (req, res) => {
         const { userEmail, password } = req.body;

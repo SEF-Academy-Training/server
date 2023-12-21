@@ -7,8 +7,10 @@ const userSchema = new Schema({
     userName: { type: String, required: true },
     userEmail: { type: String, required: true },
     password: { type: String, required: true },
-    country: { type: String }, 
-    mobileNumber: { type: Number }, 
+    company: { type: String }, 
+    date: { type: Date , default: Date.now,  },    
+    userNumber: { type: Number }, 
+    image:{type:String},
     role: { type: String, enum: ["Admin",  "User"], default: "User" },
     blog: [{ type: Schema.Types.ObjectId, ref: "Blog" }],
     paper: [{ type: Schema.Types.ObjectId, ref: "Paper" }], 
@@ -23,7 +25,7 @@ userSchema.pre('save', async function (next) {
         const genSalt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(this.password, genSalt);
         this.password = hashedPassword;
-        next();
+        next(); 
     } catch (error) {
         next(error);
     }
@@ -34,8 +36,8 @@ userSchema.methods.comparePassword = async function (password) {
 };
 
 userSchema.methods.generateTokens = function () {
-    const accessToken = jwt.sign({ _id: this._id, role: this.role }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
-    const refreshToken = jwt.sign({ _id: this._id, role: this.role }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '15d' });
+    const accessToken = jwt.sign({ _id: this._id, role: this.role  ,userEmail: this.userEmail,userName: this.userName }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
+    const refreshToken = jwt.sign({ _id: this._id, role: this.role  ,userEmail: this.userEmail,userName: this.userName }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '15d' });
     return {
         accessToken,
         refreshToken
