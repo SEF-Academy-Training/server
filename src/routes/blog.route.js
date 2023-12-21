@@ -15,11 +15,10 @@ router.post(
 	validationMiddleware(newBlogValidation),
 	blogController.createBlog
 );
-router.get('/', authenticate, blogController.getAllBlogs);
+router.get('/',  blogController.getAllBlogs);
 
 // single blogs routes operations --
-router.get('/:id', authenticate, validateObjectId, blogController.getBlog);
-
+router.get('/:id',  validateObjectId, blogController.getBlog); //authenticate,
 router
 	.route('/:id')
 	.all(authorizeAdmin, validateObjectId)

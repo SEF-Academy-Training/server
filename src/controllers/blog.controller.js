@@ -5,6 +5,7 @@ const { paginate } = require('../utils/pagination');
 
 const blogController = {
 	getAllBlogs: asyncHandler(async (req, res) => {
+		console.log('req.body', req.body);
 		const { error, data, pagination } = await paginate(Blog, req);
 		if (error) {
 			return res.status(404).send({ success: false, error });
