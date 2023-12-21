@@ -36,13 +36,14 @@ userSchema.methods.comparePassword = async function (password) {
 };
 
 userSchema.methods.generateTokens = function () {
-    const accessToken = jwt.sign({ _id: this._id, role: this.role  ,userEmail: this.userEmail,userName: this.userName }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
-    const refreshToken = jwt.sign({ _id: this._id, role: this.role  ,userEmail: this.userEmail,userName: this.userName }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '15d' });
+    const accessToken = jwt.sign({ _id: this._id, role: this.role, userEmail: this.userEmail, userName: this.userName }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
+    const refreshToken = jwt.sign({ _id: this._id, role: this.role, userEmail: this.userEmail, userName: this.userName }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '15d' });
     return {
         accessToken,
         refreshToken
     }
 }
+
 
 userSchema.methods.toJSON = function () {
     var obj = this.toObject();
