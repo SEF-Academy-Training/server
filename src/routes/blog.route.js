@@ -5,7 +5,10 @@ const { validationMiddleware } = require('../middlewares/validationMiddleware');
 const { authorizeAdmin, authenticate } = require('../middlewares/authenticateMiddleware');
 const validateObjectId = require('../middlewares/validateObjectIdMiddleware');
 const blogController = require('../controllers/blog.controller');
-const { newBlogValidation, updateBlogValidation } = require('../validation/blog.validation');
+const {
+	newBlogValidation,
+	updateBlogValidation,
+} = require('../validation/blog.validation');
 
 // -------------------------------------- all blogs routes ----------------------
 router.post(
@@ -15,18 +18,20 @@ router.post(
 	validationMiddleware(newBlogValidation),
 	blogController.createBlog
 );
-router.get('/',  blogController.getAllBlogs);
+router.get('/', blogController.getAllBlogs);
 
 // single blogs routes operations --
-router.get('/:id',  validateObjectId, blogController.getBlog); //authenticate,
+router.get('/:id', validateObjectId, blogController.getBlog); //authenticate,
 router
 	.route('/:id')
-	.all(authorizeAdmin, validateObjectId)
+	// .all(authorizeAdmin, validateObjectId)
 	.patch(
+		validateObjectId,
 		upload.single('cover'),
+		authorizeAdmin,
 		validationMiddleware(updateBlogValidation),
 		blogController.updateBlog
 	)
-	.delete(blogController.deleteBlog);
+	.delete(validateObjectId, authorizeAdmin, blogController.deleteBlog);
 
 module.exports = router;

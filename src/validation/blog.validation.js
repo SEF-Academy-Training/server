@@ -15,12 +15,12 @@ const newBlogValidation = Joi.object({
 			.trim()
 			.required()
 			.messages({
-				'any.required': 'Please provide a status for this Blog',
+				'any.required': 'Please provide a Category for this Blog',
 				// 'any.only': `Must be one of the following values: ${enum_BlogsCategory}`,
 			}),
 	// ),
 	tags: Joi.array().items(Joi.string().trim().required()).messages({
-		'any.required': 'Please provide a status for this Blog',
+		'any.required': 'Please provide a tags for this Blog',
 	}),
 
 	content: Joi.string().required().messages({
@@ -36,18 +36,17 @@ const updateBlogValidation = Joi.object({
 		'any.max': 'Blog name must be between 3 and 150 characters',
 	}),
 
-	categories: 
-	// Joi.array().items(
-		Joi.string()
-		.trim()
-		// .valid(...enum_BlogsCategory)
-			// .messages({
-			// 	'any.only': `Must be one of the following values: ${enum_BlogsCategory}`,
-			// })
-			,
+	categories:
+		// Joi.array().items(
+		Joi.string().trim(),
+	// .valid(...enum_BlogsCategory)
+	// .messages({
+	// 	'any.only': `Must be one of the following values: ${enum_BlogsCategory}`,
+	// })
 	// ),
 
-	tags: Joi.array().items(Joi.string().trim()),
+	// tags: Joi.array().items(Joi.string().trim()),
+	tags: Joi.array().items(Joi.any()),
 
 	content: Joi.string(),
 

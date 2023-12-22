@@ -20,7 +20,7 @@ async function paginate(model, req, quire = {}, populateOptions = null) {
 	pagination.page = page;
 	pagination.pages = Math.ceil(totalDocs / limit);
 	let query = model
-		.find({ ...transformedQuery, _id: { $ne: req.user._id } })
+		.find({ ...transformedQuery, _id: { $ne: req.user?._id } })
 		// .find(transformedQuery)
 		.limit(limit)
 		.skip(startIndex)
