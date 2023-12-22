@@ -14,6 +14,7 @@ const userSchema = new Schema({
     role: { type: String, enum: ["Admin",  "User"], default: "User" },
     blog: [{ type: Schema.Types.ObjectId, ref: "Blog" }],
     paper: [{ type: Schema.Types.ObjectId, ref: "Paper" }], 
+    chat: [{ type: Schema.Types.ObjectId, ref: "Chat" }], 
     services: [{ type: Schema.Types.ObjectId, ref: "Services" }],
 }, { timestamps: true });
 

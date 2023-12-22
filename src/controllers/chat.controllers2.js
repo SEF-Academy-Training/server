@@ -1,7 +1,6 @@
 const Chat = require('../models/chat.model2');
-// const User = require('../models/user.model');
+const { User } = require('../models/user.model');
 const asyncHandler = require('express-async-handler');
-
 
 // Controller for sending a text message
 const chatController = {
@@ -65,11 +64,14 @@ const chatController = {
 
 	// Controller to get senders
 	getUsersWithMessages: asyncHandler(async (req, res) => {
-		const usersWithMessages = await Chat.distinct('user').sort({ date: 1 }).populate('User');
+		// const usersWithMessages = await Chat.distinct('user').sort({ date: 1 }).populate('User');
 
-		// const userIDs = await Chat.find().distinct('user').sort({ date: 1 });
+		const userIDs = await Chat.find().distinct('user').sort({ date: 1 });
 
-		// const usersWithMessages = await User.find({ _id: { $in: userIDs } });
+		// const usersWithMessages = await User.find({ _id: { $in: userIDs }, role:'User' }).select(
+		const usersWithMessages = await User.find({ role:'User' })
+		.populate('chat')
+		// .select( 'role userName userEmail mobileNumber' );
 
 		// if (!usersWithMessages) {
 		// 	return res.status(400).send({ success: false, message: 'Messages not found' });
@@ -78,10 +80,8 @@ const chatController = {
 	}),
 
 	getUserMyMessages: asyncHandler(async (req, res) => {
-		const userId = req.params.id;
-		console.log('userId', userId);
 		const userMessages = await Chat.find({
-			user: '657ca903ac78bddc5a04edf4',
+			user: req.user?._id,
 		}).sort({ date: 1 });
 
 		if (!userMessages) {
