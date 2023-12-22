@@ -15,7 +15,7 @@ exports.enum_ServiceCategory = [
 	'training workshops',
 	'investment & incorporation',
 ];
-exports.enum_ServiceStatus = ['start', 'pending', 'completed'];
+exports.enum_ServiceStatus = [ 'pending','ongoing', 'completed'];
 
 exports.enum_paperStatus = ['valid', 'not valid'];
 exports.enum_PaperTypes = ['personal', 'company'];

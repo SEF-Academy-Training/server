@@ -6,7 +6,7 @@ const serviceSchema = new Schema(
 	{
 		title: {
 			type: String,
-			enum: enum_ServiceCategory,
+			// enum: enum_ServiceCategory,
 			required: [true, 'please provide the service title'],
 			trim: true,
 		},
@@ -21,9 +21,15 @@ const serviceSchema = new Schema(
 			type: String,
 			enum: enum_ServiceStatus,
 			required: [true, 'please provide the service title'],
+			default: enum_ServiceStatus[0],
 		},
 
 		papers: [{ type: Schema.Types.ObjectId, ref: 'Paper' }],
+
+		requiredPapers: {
+			type: [String],
+			required: true,
+		},
 
 		comments: String,
 
