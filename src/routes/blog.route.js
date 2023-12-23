@@ -21,7 +21,7 @@ router.post(
 router.get('/', blogController.getAllBlogs);
 
 // single blogs routes operations --
-router.get('/:id', validateObjectId, blogController.getBlog); //authenticate,
+router.get('/:id', validateObjectId, blogController.getBlog);
 router
 	.route('/:id')
 	// .all(authorizeAdmin, validateObjectId)

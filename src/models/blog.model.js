@@ -43,6 +43,11 @@ blogSchema.index({ '$**': 'text' });
 blogSchema.pre('findOneAndUpdate', deleteUploadedFile);
 blogSchema.pre('findOneAndDelete', deleteUploadedFile);
 
+// function deleteUploadedFile(next) {
+// 	if (!this.file || this.constructor.name !== 'Blog') return next();
+// 	deleteUploadedFile();
+// }
+
 const Blog = mongoose.model('blog', blogSchema);
 
 module.exports = Blog;

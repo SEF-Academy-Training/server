@@ -2,7 +2,7 @@ async function paginate(model, req, quire = {}, populateOptions = null) {
 	const page = +req.query.page || 1;
 	const limit = +req.query.limit || 10;
 	const startIndex = (page - 1) * limit;
-	const { filter = {}, searchBy = '', searchValue = '', sort = { createdAt: -1 } } = req.query;
+	const { filter = {}, searchBy = '', searchValue = '' } = req.query;
 	const searchQuery = searchValue
 		? { [searchBy]: { $regex: new RegExp(searchValue, 'i') } }
 		: {};
@@ -11,7 +11,7 @@ async function paginate(model, req, quire = {}, populateOptions = null) {
 	delete transformedQuery.page;
 	delete transformedQuery.limit;
 	console.log('transformedQuery p', transformedQuery);
-	console.log('sort', sort);
+
 	const totalDocs = await model.countDocuments(transformedQuery);
 	const pagination = {};
 	if (startIndex > totalDocs) return { error: 'Page not found' };
@@ -24,7 +24,7 @@ async function paginate(model, req, quire = {}, populateOptions = null) {
 		// .find(transformedQuery)
 		.limit(limit)
 		.skip(startIndex)
-		.sort(sort);
+		.sort({ createdAt: -1 });
 	// .exec();
 
 	if (populateOptions) {

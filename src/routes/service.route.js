@@ -20,7 +20,7 @@ router
 	.route('/')
 	.all(authenticate)
 	.post(validationMiddleware(newServiceValidation), CreateService)
-	.get(getAllServices); //authorizeAdmin,
+	.get(authenticate, getAllServices);
 
 // single Services routes operations --
 router.get('/:id', authenticate, validateObjectId, getService);

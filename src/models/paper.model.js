@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { enum_PaperDocs, enum_paperStatus, enum_PaperTypes } = require('../config/enums');
+const { deleteUploadedFile } = require('../utils/deleteUploadedFile');
 const { Schema } = mongoose;
 
 const paperSchema = new Schema(
@@ -37,6 +38,9 @@ const paperSchema = new Schema(
 	},
 	{ timestamps: true }
 );
+
+paperSchema.pre('findOneAndUpdate', deleteUploadedFile);
+paperSchema.pre('findOneAndDelete', deleteUploadedFile);
 
 const Paper = mongoose.model('Paper', paperSchema);
 

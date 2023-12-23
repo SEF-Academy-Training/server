@@ -17,6 +17,9 @@ const storageEngine = multer.diskStorage({
 			case '/tax-hub/chat':
 				dest = 'src/uploads/chats';
 				break;
+			case '/tax-hub/our-services':
+				dest = 'src/uploads/ourServices';
+				break;
 			default:
 				dest = 'uploads';
 		}
