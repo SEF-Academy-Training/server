@@ -3,12 +3,12 @@ const { enum_PaperDocs, enum_PaperTypes, enum_paperStatus } = require('../config
 
 const newPaperValidation = Joi.object({
 	document: Joi.string()
-		.valid(...enum_PaperDocs)
+		// .valid(...enum_PaperDocs)
 		.trim()
 		.required()
 		.messages({
 			'any.required': 'Please provide a document title',
-			'any.only': `Must be one of the following values: ${enum_PaperDocs}`,
+			// 'any.only': `Must be one of the following values: ${enum_PaperDocs}`,
 		}),
 	status: Joi.string()
 		.valid(...enum_paperStatus)
@@ -25,26 +25,27 @@ const newPaperValidation = Joi.object({
 			'any.only': `Must be one of the following values: ${enum_PaperTypes}`,
 		}),
 
-	file: Joi.string(),
+	file: Joi.any(),
+	comment: Joi.string(),
 
-	comment: Joi.string().required().messages({
-		'any.required': 'Please provide a comment for this Paper',
+	hash: Joi.string().required().messages({
+		'any.required': 'Please provide a hash for this Paper',
 	}),
-	service: Joi.string().required().messages({
-		'any.required': 'Please provide a service id for this Paper',
-	}),
+
+	// service: Joi.string().required().messages({
+	// 	'any.required': 'Please provide a service id for this Paper',
+	// }),
 	user: Joi.string().required().messages({
 		'any.required': 'Please provide a user id for this Paper',
 	}),
 });
 
 const updatePaperValidation = Joi.object({
-	document: Joi.string()
-		.valid(...enum_PaperDocs)
-		.trim()
-		.messages({
-			'any.only': `Must be one of the following values: ${enum_PaperDocs}`,
-		}),
+	document: Joi.string().trim(),
+	// .valid(...enum_PaperDocs)
+	// .messages({
+	// 	'any.only': `Must be one of the following values: ${enum_PaperDocs}`,
+	// })
 	status: Joi.string()
 		.valid(...enum_paperStatus)
 		.trim()
@@ -58,10 +59,10 @@ const updatePaperValidation = Joi.object({
 			'any.only': `Must be one of the following values: ${enum_PaperTypes}`,
 		}),
 
-	file: Joi.string(),
-
+	file: Joi.any(),
+	hash: Joi.string(),
 	comment: Joi.string(),
-	service: Joi.string(),
+	// service: Joi.string(),
 	user: Joi.string(),
 });
 

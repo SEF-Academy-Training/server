@@ -52,18 +52,18 @@ const paperController = {
 		}
 
 		// add new paper id into it's service
-		await Service.findByIdAndUpdate(
-			{ _id: newPaper?.service },
-			{ $push: { papers: newPaper._id } }
-		);
+		// await Service.findByIdAndUpdate(
+		// 	{ _id: newPaper?.service },
+		// 	{ $push: { papers: newPaper._id } }
+		// );
 
 		res.status(201).send({
 			success: true,
 			data: newPaper,
-			message: 'new Paper was created successfully',
+			message: 'Paper was uploaded successfully',
 		});
 		infoLogger.info(
-			`Paper ${newPaper?.document} | ${newPaper?._id} | new Paper was created successfully by user ${req.user?._id}`
+			`Paper ${newPaper?.document} | ${newPaper?._id} | new Paper was uploaded successfully by user ${req.user?._id}`
 		);
 	}),
 
@@ -72,6 +72,8 @@ const paperController = {
 			req.body.file = `/papers/${req.file.filename}`;
 		}
 		const { id } = req.params;
+
+		console.log('id, req.body',id, req.body);
 
 		const updatedPaper = await Paper.findByIdAndUpdate({ _id: id }, req.body, {
 			new: true,

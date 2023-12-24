@@ -17,7 +17,7 @@ exports.enum_ServiceCategory = [
 ];
 exports.enum_ServiceStatus = ['pending', 'ongoing', 'completed'];
 
-exports.enum_paperStatus = ['valid', 'not valid'];
+exports.enum_paperStatus = ['unread', 'valid', 'not valid'];
 exports.enum_PaperTypes = ['personal', 'company'];
 exports.enum_PaperDocs = [
 	//personal papers

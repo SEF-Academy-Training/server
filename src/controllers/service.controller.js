@@ -115,7 +115,7 @@ exports.getAllServices = asyncHandler(async (req, res) => {
 		queryRole = { created_by: req.user?._id };
 	}
 
-	const populateRole = { path: 'created_by', select: 'userName paper' };
+	const populateRole = { path: 'created_by', select: 'userName paper _id' };
 	const { error, data, pagination } = await paginate(
 		Service,
 		req,

@@ -15,6 +15,8 @@ const paperSchema = new Schema(
 		status: {
 			type: String,
 			enum: enum_paperStatus,
+			required: true,
+			default: enum_paperStatus[0],
 		},
 
 		type: {
@@ -23,18 +25,19 @@ const paperSchema = new Schema(
 			required: [true, 'please provide the paper title'],
 		},
 
-		// actions: {
-		// 	type: String,
-		// 	enum: enum_paperStatus,
-		// 	required: [true, 'please provide the paper title'],
-		// },
-
 		file: String,
+
 		comment: String,
 
-		service: { type: Schema.Types.ObjectId, ref: 'Service' },
+		hash: {
+			type: String,
+			required: [true, 'please provide the paper hash'],
+			unique: [true, 'hash is unique, this paper already uploaded'],
+		},
 
-		user: { type: mongoose.Types.ObjectId, ref: 'User' },
+		// service: { type: Schema.Types.ObjectId, ref: 'Service' },
+
+		user: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
 	},
 	{ timestamps: true }
 );

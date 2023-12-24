@@ -13,7 +13,6 @@ const createInitialItems = async (model, data) => {
 };
 
 const connectDB = async () => {
-	console.log('initialOurServices', initialOurServices);
 	try {
 		await mongoose.connect(process.env.MONGO_URL);
 
